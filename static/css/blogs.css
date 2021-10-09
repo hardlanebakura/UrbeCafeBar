@@ -1,0 +1,76 @@
+.allblogs {
+
+min-height:700px;
+font-weight:600;
+margin-bottom:59px;
+
+}
+
+.oneblogpost {
+
+background-color:#fff;
+margin-left:20px;
+margin-right:20px;
+display:grid;
+grid-template-columns:1fr 1fr;
+min-width:1280px;
+
+}
+
+.oneblogpost:hover {
+
+background-color:#E5A3A3;
+color: #F03838;
+
+}
+
+.oneblogpost1 {
+
+padding:8px;
+
+}
+
+.blogtitlecargo {
+
+display:grid;
+grid-template-columns:1fr 1fr;
+
+}
+
+.latestpost1 {
+
+min-height:770px;
+background-color:#fff;
+margin-left:20px;
+margin-right:20px;
+padding:22px;
+
+}
+
+.featuredblog {
+
+height:24px;
+width:103px;
+float:right;
+background-color:#000;
+color:#fff;
+border-radius:4px;
+text-align:center;
+padding:12px;
+margin-top:22px;
+margin-right:14px;
+
+}
+
+.featuredblog:hover {
+
+background-color: #F03838;
+
+}
+
+.content {
+
+height:140px;
+width:400px;
+
+}

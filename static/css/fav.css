@@ -1,0 +1,145 @@
+.fav1 {
+
+width:1903px;
+min-width:1180px;
+display:flex;
+justify-content:center;
+
+}
+
+.fav1 > * {
+
+margin-inline:10px;
+
+}
+
+.fav11 {
+
+width:200px;
+padding-top:40px;
+
+}
+
+.fav12 {
+
+
+
+}
+
+.fav_1 {
+
+margin-bottom:74px;
+
+}
+
+.footermenu {
+
+position:absolute;
+bottom:0px;
+width:1903px;
+
+}
+
+.fav1 {
+
+width:1903px;
+min-width:1180px;
+display:flex;
+justify-content:center;
+
+}
+
+.fav1 > * {
+
+margin-inline:10px;
+
+}
+
+.fav11 {
+
+width:200px;
+padding-top:40px;
+
+}
+
+.fav12 {
+
+
+
+}
+
+.fav12 img {
+
+height:110px;
+width:110px;
+
+}
+
+.fav13 {
+
+padding-top:40px;
+display:flex;
+
+}
+
+.fav14 {
+
+width:100px;
+padding-top:40px;
+
+}
+
+.fav_total {
+
+display:flex;
+justify-content:center;
+margin-top:10px;
+margin-bottom:10px;
+padding-left:10px;
+width: 1903px;
+min-width: 1180px;
+
+}
+
+.fav_total a {
+
+text-decoration:none;
+color: #b8784e;
+margin-left:7px;
+
+}
+
+.favbutton {
+
+background-color:#005bff;
+color:#fff;
+margin-left:48%;
+
+}
+
+.quantity {
+
+width:24px;
+
+}
+
+.fav12 img {
+
+height:110px;
+width:110px;
+
+}
+
+.fav13 {
+
+padding-top:40px;
+display:flex;
+
+}
+
+.fav14 {
+
+width:100px;
+padding-top:40px;
+
+}

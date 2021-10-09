@@ -1,0 +1,40 @@
+.register {
+
+height:830px;
+background-color:#CCE6FF;
+
+}
+
+.register1 {
+
+height:170px;
+background-color:#CCE6FF;
+
+}
+
+.register_board {
+
+margin-left:310px;
+margin-right:310px;
+padding:30px;
+background-color:#fff;
+min-width: 54%;
+
+}
+
+.register_board1 {
+
+font-weight:bold;
+border-bottom:1px solid lightgray;
+
+}
+
+.reg_button {
+
+height: 38px;
+width: 70px;
+background-color: #005bff;
+color: #fff;
+transform: translate(10px, 14px);
+
+}

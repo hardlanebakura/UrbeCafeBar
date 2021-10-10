@@ -316,6 +316,7 @@ def edit(id):
         return render_template("edit.html", blog = blog)
 
 @app.route("/allusers")
+@login_required
 def allusers():
 
     u_list = []

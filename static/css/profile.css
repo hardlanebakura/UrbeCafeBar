@@ -6,6 +6,8 @@ text-align:center;
 
 .footermenu {
 
-margin-top:418px;
+bottom: 0px;
+position: fixed;
+width: 1903px;
 
 }

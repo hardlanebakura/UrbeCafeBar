@@ -64,7 +64,7 @@ search_content_items.insertAdjacentHTML("beforeend", `<div class = "search1"><di
 var search1 = document.getElementsByClassName("search1");
 var search11 = document.getElementsByClassName("search11");
 for (let i = 0; i < search11.length; i++) { if (i > 7) search11[i].style.display = "none"; }
-console.log(search11.length);
+//console.log(search11.length);
 
 for (let i = 0; i < search1.length; i++) {
 

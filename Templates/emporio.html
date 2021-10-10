@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<link rel = "stylesheet" href = "static/css/emporio.css">
+<script>
+    var items = {{ items|tojson }}
+</script>
+
+{% endblock %}
+
+{% block body1 %}
+
+        {% if loggedinuser %}
+<div class = "checkifloggeduser">
+    <div class = "checkifloggeduser1">
+            {% if isadmin %}
+                <span class = "logged_in_name_admin">
+            {{ loggedinuser }}
+            </span>
+            {% else %}
+                <span class = "logged_in_name">
+             {{ loggedinuser }}
+                </span>
+            {% endif %}
+            <a href = "/logout">Logout</a>
+    </div>
+</div>
+        {% endif %}
+
+{% endblock %}
+
+{% block body %}
+
+<div class = "divemporios1">
+    <div class = "divemporios12">
+        {% set len = items|length %}
+        {{ len }}
+        {% for i in range(25, items|length, 3) %}
+        {{ i }}
+        <div class = "emporioitemsrow1">
+            <div class = "emporioitemsrow11">
+                <img src = "static/images/compre{{ i }}.png">
+                <div class = "category_list_field">
+                    <div class = "category_list_field1">
+                        <button class = "categoryfieldbutton1">
+                        <img src = "./static/images/hm_favorite_2.png" class = "favorite_img1">
+                        </button>
+                    </div>
+                    <div class = "category_list_field2">
+                        <button class = "categoryfieldbutton2">
+                        <img src = "./static/images/hm_2_cart_2.png" class = "favorite_img2">
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class = "emporioitemsrow11">
+                <img src = "static/images/compre{{ i+1 }}.png">
+                <div class = "category_list_field">
+                    <div class = "category_list_field1">
+                        <button class = "categoryfieldbutton1">
+                        <img src = "./static/images/hm_favorite_2.png" class = "favorite_img1">
+                        </button>
+                    </div>
+                    <div class = "category_list_field2">
+                        <button class = "categoryfieldbutton2">
+                        <img src = "./static/images/hm_2_cart_2.png" class = "favorite_img2">
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class = "emporioitemsrow11">
+                <img src = "static/images/compre{{ i+2 }}.png">
+                <div class = "category_list_field">
+                    <div class = "category_list_field1">
+                        <button class = "categoryfieldbutton1">
+                        <img src = "./static/images/hm_favorite_2.png" class = "favorite_img1">
+                        </button>
+                    </div>
+                    <div class = "category_list_field2">
+                        <button class = "categoryfieldbutton2">
+                        <img src = "./static/images/hm_2_cart_2.png" class = "favorite_img2">
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class = "category_list_title">
+            <a href = "{{ i-6 }}">
+            <div class = "category_list_title_1 gold">{{ items[i-6]['title'] }}
+            </div>
+            </a>
+            <a href = "{{ i-5 }}">
+            <div class = "category_list_title_1 gold">
+                {{ items[i-5]['title'] }}
+            </div>
+            </a>
+            <a href = "{{ i-4 }}">
+            <div class = "category_list_title_1 gold">
+                {{ items[i-4]['title'] }}
+            </div>
+            </a>
+        </div>
+        <div class = "category_list_pricing">
+            <div class = "category_list_price_1">
+                {{ items[i-6]['pricing'] }}
+            </div>
+            <div class = "category_list_price_1">
+                {{ items[i-5]['pricing'] }}
+            </div>
+            <div class = "category_list_price_1">
+                {{ items[i-4]['pricing'] }}
+            </div>
+        </div>
+        {% endfor %}
+
+</div>
+</div>
+<script type = "text/javascript" src = "static/js/emporio.js"></script>
+
+{% endblock %}

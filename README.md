@@ -10,5 +10,7 @@ Login with these special credential
 
 in order to test special features (making, deleting and editing blogposts as well as having a look at the user API)
 
+Hosted app on Heroku: https://urbecafebar1.herokuapp.com/
+
 Happy browsing and thank you for visiting!
 

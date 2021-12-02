@@ -3,22 +3,18 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from datetime import datetime
 from items import items, metodos
+from config import *
+from admins import LIST_OF_ADMINS
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'secretkey1'
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///users.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_BINDS'] = { "blogs": "sqlite:///blogs.db", "items": "sqlite:///items.db" }
+set_config(app.config, app.jinja_env)
+
 db = SQLAlchemy(app)
 SESSION_TYPE = 'sqlalchemy'
 app.config.from_object(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
-app.jinja_env.auto_reload = True
-app.jinja_env.cache = {}
-app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config["CACHE_TYPE"] = "redis"
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -73,8 +69,6 @@ def post_with_searchbar():
     session['searchbar_2_content'] = item2
     session['searchbar_3_content'] = item3
     session['searchbar_4_content'] = item4
-    print(item1)
-    print(item2)
     return redirect(item2)
 
 @app.route("/", methods = ["GET", "POST"])
@@ -85,14 +79,11 @@ def index():
             print("Redirecting via login form")
             su1 = request.form['username_1']
             sp1 = request.form['password_1']
-            print(su1 + sp1)
             check_login = User.query.filter_by(username="%s" % su1).first()
-            print(check_login)
             if (check_login == None):
                 currentislogged_in = current_user.is_anonymous
                 print(current_user.is_anonymous)
                 if (current_user.is_anonymous): return render_template("index.html")
-            print(check_login.password)
             passwords_match = check_login.password == sp1
             print(passwords_match)
             if (check_login):
@@ -145,14 +136,6 @@ def item(id):
         item2 = id
         item3 = items[id]['pricing']
         item4 = items[id]['imagesource']
-        print(item1)
-        print(item2)
-        print(item3)
-        print(item4)
-        print(items[id]['title'])
-        print(id)
-        print(items[id]['pricing'])
-        print(items[id]['imagesource'])
         if current_user.is_anonymous:
             # get for non login
             return render_template("item.html", items=items, item1 = item1, item2 = item2, item3 = item3, item4 = item4)
@@ -200,7 +183,6 @@ def aprendamais():
         if i == 3: break
         listofnewblogs.append([Blog.query.all()[j].title.capitalize(), Blog.query.all()[j].content.capitalize(),
                                Blog.query.all()[j].author])
-        print(listofnewblogs)
         j = j - 1
     if current_user.is_anonymous:
         return render_template("aprendamais.html", listofnewblogs = listofnewblogs, items=items, metodos=metodos)
@@ -247,7 +229,7 @@ def register():
         username = request.form['username_11']
         password = request.form['password_11']
         nu = User(email = email, username=username, password=password)
-        if nu.username == "hardlane2000" or nu.username == "bearbot":
+        if nu.username in LIST_OF_ADMINS:
             nu.isadmin = True
         db.session.add(nu)
         db.session.commit()
@@ -274,8 +256,6 @@ def blogs():
         blog_content = request.form['content']
         blog_author = current_user.username
         blog_datetime = datetime.utcnow()
-        print(blog_datetime)
-        print(blog_datetime.second)
         x = datetime(blog_datetime.year, blog_datetime.month, blog_datetime.day, blog_datetime.hour,
                      blog_datetime.minute, blog_datetime.second)
         print(x)

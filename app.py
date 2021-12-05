@@ -5,6 +5,7 @@ from datetime import datetime
 from items import items, metodos
 from config import *
 from admins import LIST_OF_ADMINS
+from log_config import logging
 
 app = Flask(__name__)
 
@@ -76,19 +77,19 @@ def index():
 
     if request.method == "POST":
         if (request.form['submit'] == "LOGIN"):
-            print("Redirecting via login form")
+            logging.debug("Redirecting via login form")
             su1 = request.form['username_1']
             sp1 = request.form['password_1']
             check_login = User.query.filter_by(username="%s" % su1).first()
             if (check_login == None):
                 currentislogged_in = current_user.is_anonymous
-                print(current_user.is_anonymous)
+                logging.debug(current_user.is_anonymous)
                 if (current_user.is_anonymous): return render_template("index.html")
             passwords_match = check_login.password == sp1
-            print(passwords_match)
+            logging.debug(passwords_match)
             if (check_login):
                 if not passwords_match:
-                    print("Passwords didnt match")
+                    logging.debug("Passwords didnt match")
                     listofnewblogs = []
                     j = -1
                     for i in range(len(Blog.query.all())):
@@ -98,7 +99,7 @@ def index():
                     #passwords didnt match
                     return render_template("index.html", listofnewblogs=listofnewblogs, items = items)
                 else:
-                    print("Passwords matching!")
+                    logging.debug("Passwords matching!")
                     login_user(check_login)
                     session['username'] = current_user.username
                     listofnewblogs = []
@@ -258,11 +259,11 @@ def blogs():
         blog_datetime = datetime.utcnow()
         x = datetime(blog_datetime.year, blog_datetime.month, blog_datetime.day, blog_datetime.hour,
                      blog_datetime.minute, blog_datetime.second)
-        print(x)
+        logging.debug(x)
         new_blog = Blog(title=blog_title, content = blog_content, author=blog_author, datetime=x)
         db.session.add(new_blog)
         db.session.commit()
-        if request.endpoint == '/edit/<int:id>': print("going to editin")
+        if request.endpoint == '/edit/<int:id>': logging.debug("going to editing")
         # < link
         # href = "{{ url_for('static/assets/', filename='a.css') }}"
         # rel = "stylesheet"
@@ -271,7 +272,8 @@ def blogs():
     else:
         all_blogs = Blog.query.order_by(Blog.datetime).all()
         all_blogs.reverse()
-        return render_template("blogs.html", blogs=all_blogs, author = current_user.username)
+        loggedinuser = current_user.username
+        return render_template("blogs.html", loggedinuser = loggedinuser, blogs=all_blogs, author = current_user.username)
 
 @app.route("/blogs/delete/<int:id>")
 def delete(id):

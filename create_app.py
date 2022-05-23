@@ -13,7 +13,8 @@ from dotenv import dotenv_values
 #from routing.routes import *
 import time
 
-ADMINS = dotenv_values("admins.env")["ADMINS"]
+#ADMINS = dotenv_values("admins.env")["ADMINS"]
+from items import ADMINS
 
 def create_app():
     app = Flask(__name__, template_folder = "Templates")

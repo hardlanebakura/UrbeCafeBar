@@ -16,7 +16,6 @@ Storage.prototype.getObj = function(key) {
 }
 
 var cartitems = sessionStorage.getObj('cartitems');
-console.log(cartitems);
 if (sessionStorage.getObj('cartitems') == null) sessionStorage.setObj('cartitems', []);
 hm_cart_number.innerHTML = sessionStorage.getObj('cartitems').length;
 if (sessionStorage.getObj('favitems') == null) sessionStorage.setObj('favitems', []);
@@ -40,7 +39,6 @@ for (const [key, value] of Object.entries(e)) {
 //when expanding this page, in future there will be new features
 //var cartsum = 0;
 //
-//console.log(listoftitles);
 //for (let i = 0; i < cartitems.length; i++) {
 //
 //profilecart1.insertAdjacentHTML("afterend", `<div class = "profilecart1"><div class = "profilecart11">${ listoftitles[cartitems[i]] } </div><div class = "profilecart12"><img src = ${listofimagesources[cartitems[i]]} class = "profilecart12img"></div><div class = "profilecart13"></div><div class = "profilecart14">${ listofpricings[cartitems[i]] }</div></div>`)

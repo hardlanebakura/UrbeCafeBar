@@ -14,7 +14,6 @@ Storage.prototype.getObj = function(key) {
 }
 
 var favitems = sessionStorage.getObj('favitems');
-console.log(favitems);
 
 //if there are no fav items
 if(favitems.length == 0) {
@@ -43,7 +42,6 @@ for (const [key, value] of Object.entries(e)) {
 
 })
 
-console.log(listoftitles);
 for (let i = 0; i < favitems.length; i++) {
 
 fav1.insertAdjacentHTML("afterend", `<div class = "fav1"><div class = "fav11">${ listoftitles[favitems[i]] } </div><div class = "fav12"><img src = ${listofimagesources[favitems[i]]} class = "fav12img"></div><div class = "fav13"></div><div class = "fav14">${ listofpricings[favitems[i]] }</div></div>`)

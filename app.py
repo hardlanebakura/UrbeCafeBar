@@ -1,57 +1,27 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from datetime import datetime
 from items import items, metodos
 from config import *
-from admins import LIST_OF_ADMINS
+from dotenv import dotenv_values
 from log_config import logging
+from subsidiary_functions import *
+from routing.routes import index_pages
+from routing.routes_cafes import cafes_pages
+from routing.routes_chas import chas_pages
+from routing.routes_emporio import emporio_pages
+from routing.routes_aprendamais import aprendamais_pages
+from routing.routes_profile import profile_pages
 
-app = Flask(__name__)
+app.register_blueprint(index_pages)
+app.register_blueprint(cafes_pages)
+app.register_blueprint(chas_pages)
+app.register_blueprint(emporio_pages)
+app.register_blueprint(aprendamais_pages)
+app.register_blueprint(profile_pages)
 
-set_config(app.config, app.jinja_env)
-
-db = SQLAlchemy(app)
-SESSION_TYPE = 'sqlalchemy'
-app.config.from_object(__name__)
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    username = db.Column(db.String(100), nullable=False, unique=True)
-    password = db.Column(db.String(100), nullable=False)
-    datetime = db.Column(db.DateTime, default = datetime.utcnow)
-    isadmin = db.Column(db.Boolean, default = False)
-
-    def __repr__(self):
-        return "User " + str(self.id)
-
-class Blog(UserMixin, db.Model):
-    __bind_key__ = "blogs"
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    author = db.Column(db.String(100), nullable=False)
-    datetime = db.Column(db.DateTime, default = datetime.utcnow)
-
-    def __repr__(self):
-        return "Blog " + str(self.id)
-
-class Item(db.Model):
-    __bind_key__ = "items"
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False)
-    pricing = db.Column(db.String, nullable=False)
-    imagesource = db.Column(db.String, nullable=False)
-
-    def __repr__(self):
-        return "Item " + str(self.id)
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+ADMINS = dotenv_values("admins.env")["ADMINS"]
 
 #for i in items:
     #ni = Item(title = i['title'], pricing = i['pricing'], imagesource = i['imagesource'])
@@ -59,145 +29,6 @@ def load_user(user_id):
     #db.session.commit()
 
     #commented these lines in order to prevent multiple adds to the database
-
-def post_with_searchbar():
-
-    item1 = request.form['searchbar_content']
-    item2 = request.form['searchbar_2_content']
-    item3 = request.form['searchbar_3_content']
-    item4 = request.form['searchbar_4_content']
-    session['searchbar_content'] = item1
-    session['searchbar_2_content'] = item2
-    session['searchbar_3_content'] = item3
-    session['searchbar_4_content'] = item4
-    return redirect(item2)
-
-@app.route("/", methods = ["GET", "POST"])
-def index():
-
-    if request.method == "POST":
-        if (request.form['submit'] == "LOGIN"):
-            logging.debug("Redirecting via login form")
-            su1 = request.form['username_1']
-            sp1 = request.form['password_1']
-            check_login = User.query.filter_by(username="%s" % su1).first()
-            if (check_login == None):
-                currentislogged_in = current_user.is_anonymous
-                logging.debug(current_user.is_anonymous)
-                if (current_user.is_anonymous): return render_template("index.html")
-            passwords_match = check_login.password == sp1
-            logging.debug(passwords_match)
-            if (check_login):
-                if not passwords_match:
-                    logging.debug("Passwords didnt match")
-                    listofnewblogs = []
-                    j = -1
-                    for i in range(len(Blog.query.all())):
-                        if i == 3: break
-                        listofnewblogs.append(Blog.query.all()[i])
-                        j = j - 1
-                    #passwords didnt match
-                    return render_template("index.html", listofnewblogs=listofnewblogs, items = items)
-                else:
-                    logging.debug("Passwords matching!")
-                    login_user(check_login)
-                    session['username'] = current_user.username
-                    listofnewblogs = []
-                    j = -1
-                    for i in range(len(Blog.query.all())):
-                        if i == 3: break
-                        listofnewblogs.append([Blog.query.all()[j].title.capitalize(), Blog.query.all()[j].content.capitalize(), Blog.query.all()[j].author])
-                        j = j - 1
-                        #user logged in
-                    return render_template("index.html", loggedinuser=current_user.username, listofnewblogs = listofnewblogs, isadmin = current_user.isadmin, items = items)
-            return redirect("/")
-        else:
-            # posting via searchbar
-            return post_with_searchbar()
-    listofnewblogs = []
-    j = -1
-    for i in range(len(Blog.query.all())):
-        if i == 3: break
-        listofnewblogs.append([Blog.query.all()[j].title.capitalize(), Blog.query.all()[j].content.capitalize(), Blog.query.all()[j].author])
-        j = j - 1
-
-    if current_user.is_anonymous:
-        #get for non login
-        return render_template("index.html", listofnewblogs = listofnewblogs, items = items)
-    #get for login
-    return render_template("index.html", loggedinuser=current_user.username, isadmin = current_user.isadmin, listofnewblogs = listofnewblogs, items = items)
-
-@app.route("/<int:id>", methods = ["GET", "POST"])
-def item(id):
-
-    if request.method == "POST":
-        return post_with_searchbar()
-    else:
-        item1 = items[id]['title']
-        item2 = id
-        item3 = items[id]['pricing']
-        item4 = items[id]['imagesource']
-        if current_user.is_anonymous:
-            # get for non login
-            return render_template("item.html", items=items, item1 = item1, item2 = item2, item3 = item3, item4 = item4)
-        # get for login
-        return render_template("item.html", loggedinuser=current_user.username, isadmin=current_user.isadmin, items=items, item1 = item1, item2 = item2, item3 = item3, item4 = item4)
-
-@app.route("/cafes", methods = ["GET", "POST"])
-def cafes():
-
-    if request.method == "POST":
-        return post_with_searchbar()
-    if current_user.is_anonymous:
-        return render_template("cafes.html", items = items)
-    loggedinuser = current_user.username
-    return render_template("cafes.html", loggedinuser=loggedinuser, isadmin = current_user.isadmin, items = items)
-
-@app.route("/cha", methods = ["GET", "POST"])
-def cha():
-
-    if request.method == "POST":
-        return post_with_searchbar()
-    if current_user.is_anonymous:
-        return render_template("cha.html", items = items)
-    loggedinuser = current_user.username
-    return render_template("cha.html", loggedinuser=loggedinuser, isadmin = current_user.isadmin, items = items)
-
-@app.route("/emporio", methods = ["GET", "POST"])
-def emporio():
-
-    if request.method == "POST":
-        return post_with_searchbar()
-    if current_user.is_anonymous:
-        return render_template("emporio.html", items = items)
-    loggedinuser = current_user.username
-    return render_template("emporio.html", loggedinuser=loggedinuser, isadmin=current_user.isadmin, items = items)
-
-@app.route("/aprendamais", methods = ["GET", "POST"])
-def aprendamais():
-
-    if request.method == "POST":
-        return post_with_searchbar()
-    listofnewblogs = []
-    j = -1
-    for i in range(len(Blog.query.all())):
-        if i == 3: break
-        listofnewblogs.append([Blog.query.all()[j].title.capitalize(), Blog.query.all()[j].content.capitalize(),
-                               Blog.query.all()[j].author])
-        j = j - 1
-    if current_user.is_anonymous:
-        return render_template("aprendamais.html", listofnewblogs = listofnewblogs, items=items, metodos=metodos)
-    loggedinuser = current_user.username
-    return render_template("aprendamais.html", listofnewblogs = listofnewblogs, loggedinuser=loggedinuser, isadmin=current_user.isadmin, items=items, metodos=metodos)
-
-@app.route("/profile")
-@login_required
-def profile():
-
-    loggedinuser = current_user.username
-    profilecreated1 = current_user.datetime
-    profilecreated = profilecreated1.strftime("%Y %m %d")
-    return render_template("profile.html", loggedinuser=loggedinuser, profilecreated = profilecreated, isadmin = current_user.isadmin, items = items)
 
 @app.route("/fav", methods = ["GET", "POST"])
 def fav():
@@ -230,7 +61,7 @@ def register():
         username = request.form['username_11']
         password = request.form['password_11']
         nu = User(email = email, username=username, password=password)
-        if nu.username in LIST_OF_ADMINS:
+        if nu.username in ADMINS:
             nu.isadmin = True
         db.session.add(nu)
         db.session.commit()

@@ -53,8 +53,6 @@ items.forEach(e => {
 
 })
 
-console.log(listofimagesources);
-
 for (let i = 0; i < listoftitles.length; i++) {
 
     search_content_items.insertAdjacentHTML("beforeend", `<div class = "search1"><div class = "search11">${ listoftitles[i] }</div></div>`)
@@ -66,7 +64,6 @@ var search11 = document.getElementsByClassName("search11");
 for (let i = 0; i < search11.length; i++) {
     if (i > 7) search11[i].style.display = "none";
 }
-//console.log(search11.length);
 
 for (let i = 0; i < search1.length; i++) {
 
@@ -87,9 +84,7 @@ for (let i = 0; i < search1.length; i++) {
 
 function searchbar() {
 
-    console.log(items.length);
     filter = searchbar_content.value.toUpperCase();
-    console.log(items);
 
 
     var j = 0; //max of 7 items in searchbar
@@ -116,9 +111,5 @@ function validate_Form_1() {
     searchbar_2_content.value = elementindex;
     searchbar_3_content.value = listofpricings[elementindex];
     searchbar_4_content.value = listofimagesources[elementindex];
-    console.log(searchbar_content.value);
-    console.log(searchbar_2_content.value);
-    console.log(searchbar_3_content.value);
-    console.log(searchbar_4_content.value);
 
 }

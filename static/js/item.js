@@ -11,7 +11,6 @@ Storage.prototype.setObj = function(key, obj) {
 Storage.prototype.getObj = function(key) {
     return JSON.parse(this.getItem(key))
 }
-console.log(itemimg);
 
 var cartitems = [];
 var listoftitles = []
@@ -21,9 +20,6 @@ if (sessionStorage.getObj('cartitems') == null) sessionStorage.setObj('cartitems
 if (sessionStorage.getObj('favitems') == null) sessionStorage.setObj('favitems', []);
 hm_favorites_number.innerHTML = sessionStorage.getObj('favitems').length;
 hm_cart_number.innerHTML = sessionStorage.getObj('cartitems').length;
-console.log(sessionStorage.getObj('favitems'));
-console.log(sessionStorage.getObj('cartitems'));
-console.log(sessionStorage.getObj('cartitems').length);
 
 items.forEach(e => {
 
@@ -38,9 +34,7 @@ items.forEach(e => {
 let addredcartsonload = categoryfields.parentNode.children[0].getAttribute("src");
 //list of imagesources on page
 if (addredcartsonload.substr(0, 2) == "./") addredcartsonload = addredcartsonload.slice(2);
-console.log(addredcartsonload);
 var elemindex = listofimagesources.indexOf(addredcartsonload);
-console.log(elemindex);
 
 var j_2 = categoryfields.parentNode.children[1].children[0].children[0].children.item(0);
 //j2 = img1
@@ -82,17 +76,13 @@ categoryfields.addEventListener("click", event => {
             j3 = 1;
             let targetimagesrc = event.target.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("img")[0].getAttribute("src");
             //if attribute src is "./static..." it will turn it to "static..." in order to match what is in the items
-            console.log(targetimagesrc);
             if (targetimagesrc.substr(0, 2) == "./") targetimagesrc = targetimagesrc.slice(2);
-            console.log(targetimagesrc);
-            console.log(event.target.getAttribute("src"));
             let elementindex = listofimagesources.indexOf(targetimagesrc);
             if (!(sessionStorage.getObj('favitems').includes(elementindex))) {
 
                 let k = sessionStorage.getObj('favitems');
                 k.push(elementindex);
                 sessionStorage.setObj('favitems', k);
-                console.log(sessionStorage.getObj('favitems'));
                 hm_favorites_number.innerHTML = sessionStorage.getObj('favitems').length;
 
             }
@@ -104,10 +94,8 @@ categoryfields.addEventListener("click", event => {
 
             event.target.setAttribute("src", "static/images/hm_favorite_2.png");
             let targetimagesrc = event.target.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("img")[0].getAttribute("src");
-            console.log(targetimagesrc);
             //if attribute src is "./static..." it will turn it to "static..." in order to match what is in the items
             if (targetimagesrc.substr(0, 2) == "./") targetimagesrc = targetimagesrc.slice(2);
-            console.log(targetimagesrc);
             let elementindex = listofimagesources.indexOf(targetimagesrc);
             let k = sessionStorage.getObj('favitems');
             k = k.filter(e => e !== elementindex);
@@ -121,7 +109,6 @@ categoryfields.addEventListener("click", event => {
     if (event.target && event.target.matches(".favorite_img2")) {
 
         var j1 = 0;
-        console.log(event.target.getAttribute("src"))
             //this variable is needed so that image does not immediately jump to the next event.target
 
         if (event.target.getAttribute("src") == "static/images/hm_2_cart_2.png") {
@@ -131,17 +118,13 @@ categoryfields.addEventListener("click", event => {
             hm_cart_number.innerText = (parseInt(hm_cart_number.innerText) + 1).toString();
             let targetimagesrc = event.target.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("img")[0].getAttribute("src");
             //if attribute src is "./static..." it will turn it to "static..." in order to match what is in the items
-            console.log(targetimagesrc);
             if (targetimagesrc.substr(0, 2) == "./") targetimagesrc = targetimagesrc.slice(2);
-            console.log(targetimagesrc);
-            console.log(event.target.getAttribute("src"));
             let elementindex = listofimagesources.indexOf(targetimagesrc);
             if (!(sessionStorage.getObj('cartitems').includes(elementindex))) {
 
                 let k = sessionStorage.getObj('cartitems');
                 k.push(elementindex);
                 sessionStorage.setObj('cartitems', k);
-                console.log(sessionStorage.getObj('cartitems'));
                 hm_cart_number.innerHTML = sessionStorage.getObj('cartitems').length;
 
             }
@@ -152,13 +135,10 @@ categoryfields.addEventListener("click", event => {
 
         if ((event.target.getAttribute("src") == "static/images/hm_2_cart_2_a.png") && j1 == 0) {
 
-            console.log("1");
             event.target.setAttribute("src", "static/images/hm_2_cart_2.png");
             let targetimagesrc = event.target.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("img")[0].getAttribute("src");
-            console.log(targetimagesrc);
             //if attribute src is "./static..." it will turn it to "static..." in order to match what is in the items
             if (targetimagesrc.substr(0, 2) == "./") targetimagesrc = targetimagesrc.slice(2);
-            console.log(targetimagesrc);
             let elementindex = listofimagesources.indexOf(targetimagesrc);
             let k = sessionStorage.getObj('cartitems');
             k = k.filter(e => e !== elementindex);

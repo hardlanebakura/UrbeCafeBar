@@ -97,3 +97,22 @@ function validate_Form_1() {
     searchbar4Content.value = listOfImageSources[elementIndex];
 
 }
+
+
+//styling
+if (window.location.href.includes("cart")) {
+
+    var footerMenu = document.getElementsByClassName("footermenu")[0];
+    var cartNumber = document.getElementsByClassName("hm_cart_number")[0];
+    footerMenu.style.marginTop = (419 - parseInt(cartNumber.innerText) * 117).toString() + "px";
+
+}
+
+//styling
+if (window.location.href.includes("fav")) {
+
+    var footerMenu = document.getElementsByClassName("footermenu")[0];
+    var favNumber = document.getElementsByClassName("hm_favorites_number")[0];
+    footerMenu.style.marginTop = (460 - parseInt(favNumber.innerText) * 117).toString() + "px";
+
+}

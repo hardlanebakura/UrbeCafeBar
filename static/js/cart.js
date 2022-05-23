@@ -20,7 +20,7 @@ var cartitems = sessionStorage.getObj('cartitems');
 //if there are no cart items
 if (cartitems.length == 0) {
 
-    cartbutton.style.display = "none";
+    if (cartbutton != undefined) cartbutton.style.display = "none";
     cart_total.innerHTML = "Looks like you have no items in cart. Make sure to check our " + `<a href = "/">amazing coffees and teas</a>!`;
 
 }
@@ -43,6 +43,7 @@ items.forEach(e => {
     }
 
 })
+
 
 var cartsum = 0;
 

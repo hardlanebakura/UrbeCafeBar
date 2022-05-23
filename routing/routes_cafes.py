@@ -18,6 +18,6 @@ def cafes_post():
 def cafes():
 
     if current_user.is_anonymous:
-        return render_template("cha.html", items = items)
+        return render_template("cafes.html", items = items)
     loggedinuser = current_user.username
     return render_template("cafes.html", loggedinuser=loggedinuser, isadmin = current_user.isadmin, items = items)

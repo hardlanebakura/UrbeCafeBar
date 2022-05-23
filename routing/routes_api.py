@@ -12,5 +12,6 @@ api_pages = Blueprint('api', __name__,
 
 @api_pages.route("/")
 def api():
-    d = User.query.all()
-    return jsonify({"All_users":d})
+
+    all_users = User.find_all()
+    return jsonify("All_users", all_users)

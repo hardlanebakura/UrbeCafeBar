@@ -10,7 +10,7 @@ import os
 logout_pages = Blueprint('logout', __name__,
                         template_folder='Templates', static_folder='static', url_prefix = "/")
 
-@logout_pages.route("/logout", methods = ["POST"])
+@logout_pages.route("/logout")
 @login_required
 def logout():
 

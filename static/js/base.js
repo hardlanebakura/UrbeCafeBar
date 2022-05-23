@@ -113,6 +113,6 @@ if (window.location.href.includes("fav")) {
 
     var footerMenu = document.getElementsByClassName("footermenu")[0];
     var favNumber = document.getElementsByClassName("hm_favorites_number")[0];
-    footerMenu.style.marginTop = (460 - parseInt(favNumber.innerText) * 117).toString() + "px";
+    footerMenu.style.marginTop = (452 - parseInt(favNumber.innerText) * 117).toString() + "px";
 
 }

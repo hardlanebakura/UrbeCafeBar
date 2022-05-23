@@ -3,12 +3,13 @@ from flask_cors import CORS, cross_origin
 from subsidiary_functions import *
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from log_config import logging
-from items import items, metodos
+from items import items, metodos, ADMINS
 import time
 import os
 from dotenv import dotenv_values
 
-ADMINS = dotenv_values("admins.env")["ADMINS"]
+
+#ADMINS = dotenv_values("admins.env")["ADMINS"]
 
 register_pages = Blueprint('register', __name__,
                         template_folder='Templates', static_folder='static', url_prefix = "/")

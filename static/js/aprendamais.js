@@ -22,6 +22,9 @@ if (sessionStorage.getObj('favitems') == null) sessionStorage.setObj('favitems',
 favoritesNumber.innerHTML = sessionStorage.getObj('favitems').length;
 cartNumber.innerHTML = sessionStorage.getObj('cartitems').length;
 
+var titlecafe = document.getElementsByClassName("titlecafe")[0];
+titlecafe.innerHTML = "APRENDA MAIS";
+
 items.forEach(e => {
 
     for (const [key, value] of Object.entries(e)) {

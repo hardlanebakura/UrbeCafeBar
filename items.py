@@ -292,3 +292,5 @@ items = [
 ]
 
 metodos = ['PRENSA FRANCESA', 'COADO - HARIO V60', 'SYPHON', 'ESPRESSO', 'CLEVER', 'GUIA DE MOAGEM DE CAFÉ', 'CHEMEX', 'CAFETEIRA ITALIANA / MOKA', 'AEROPRESS']
+
+ADMINS = ["hardlane2000", "bearbot"]

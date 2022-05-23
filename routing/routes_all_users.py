@@ -28,4 +28,4 @@ def allusers():
 
         })
 
-    return(jsonify("All registered users", u_list))
+    return jsonify({"All registered users": u_list})
